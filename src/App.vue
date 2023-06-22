@@ -12,9 +12,10 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter&family=Roboto&family=Work+Sans&display=swap');
-/* font-family: 'Inter', sans-serif;
-font-family: 'Roboto', sans-serif; */
+@import '@fontsource/inter';
+@import '@fontsource-variable/work-sans';
+
+
 * {
   margin: 0;
   padding: 0;
