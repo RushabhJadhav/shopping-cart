@@ -20,7 +20,7 @@ npm run build
 npm run lint
 ```
 
-### To Start Json server
+### To Start json server
 ```
 npm run json-server
 ```
