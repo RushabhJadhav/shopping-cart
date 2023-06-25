@@ -1,13 +1,13 @@
 <template>
   <div>
-    <header-cont @filterSearch="filterItems($event)"></header-cont>
+    <header-cont></header-cont>
     <div class="product-cont">
       <div class="product-item" v-for="product in getData" :key="product.id">
         <h2 class="title">{{ product.title.slice(0, 50) }}</h2>
         <img class="product-img" :src="product.image">
         <div class="desc">{{ product.description.slice(0, 130) + "..." }}</div>
         <div class="price">${{ product.price }}</div>
-        <button @click="addItemToCart(product)">Add to Cart</button>
+        <button @click="addItemToCart(product), openBottom()">Add to Cart</button>
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script>
 import Header from './Header.vue'
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions,  mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -29,9 +29,12 @@ export default {
   },
   methods: {
     ...mapActions(['fetchData', 'addToCart']),
-    addItemToCart(product) {
-      this.addToCart(product)
-    }
+    addItemToCart(item) {
+      this.addToCart(item)
+    },
+    openBottom(){
+      this.$toast('Item add to cart');
+    },
   }
 }
 </script>
@@ -64,13 +67,11 @@ export default {
   box-shadow: 6px 6px 20px #aaaaaa;
 }
 .title {
-  font-size: 1rem;}
+  font-size: 1rem;
+}
 .desc {
   text-align: justify;
   font-size: .8rem;
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  height: 150px; */
 }
 .product-img {
   width: 80%;

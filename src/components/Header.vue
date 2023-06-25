@@ -10,11 +10,11 @@
                 <li><router-link to="/electronics">Electronics</router-link></li>
                 <li><router-link to="/jewellery">Jewellery</router-link></li>
             </ul>
-            <input type="text" placeholder="Search..." v-model="searchInput" @input="handleSearch">
+            <input type="text" placeholder="Search...">
             <router-link to="/cart">
                 <div class="cart">
                     <i class="fa fa-shopping-bag"></i>
-                    <span v-if="getCartData.length > 0" id="cart-count">{{ getCartData.length }}</span>
+                    <span id="cart-count">{{ CartCount }}</span>
                 </div>
             </router-link>
         </nav>
@@ -25,23 +25,21 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-    // props: ['filterSearch'],
     data() {
         return {
-            searchInput: ''
         }
     },
     computed: {
-        ...mapGetters(['getCartData'])
+        ...mapGetters(['getCartData']),
+        CartCount() {
+            return this.getCartData.length
+        }
     },
     mounted() {
         this.fetchCart()
     },
     methods: {
         ...mapActions(['fetchCart']),
-        handleSearch() {
-            this.$emit('filterSearch', this.searchInput)
-        }
     }
 }
 </script>
@@ -66,6 +64,7 @@ nav {
     user-select: none;
     cursor: pointer;
     font-size: 1.5rem;
+    font-weight: bold;
     font-family:'Work sans', sans-serif;
 }
 .logo a {

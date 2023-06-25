@@ -31,8 +31,8 @@ export default new Vuex.Store({
         GET_CART(state, product) {
             state.cart = product
         },
-        removeFromCart(state, itemId) {
-            state.cart = state.cart.filter((item) => item.id !== itemId);
+        ADD_TO_CART(state, product) {
+            state.cart.push(product)
         }
     },
     actions: {
@@ -55,18 +55,9 @@ export default new Vuex.Store({
                 body: JSON.stringify(product)
             })
             .then(res => res.json)
-            .then(product => commit('ADD_TO_CART', product))
-        },
-        removeCart({commit}, product) {
-            fetch(`http://localhost:3000/cart${product}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(product)
-                .then(res => res.json())
-                .then(product => commit('RemoveFromCart', product))
+            .then(product => {
+                commit('ADD_TO_CART', product)
             })
-        }
+        },
     },
 })

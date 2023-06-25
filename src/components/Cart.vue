@@ -8,7 +8,7 @@
                   <img class="cart-img" :src="item.image">
                   <p class="desc">{{ item.description}}</p>
                   <p class="price">${{ item.price }}</p>
-                  <button @click="removeItem(item.id)">Remove from cart</button>
+                  <button @click="removeItem(item.id), openBottom()">Remove from cart</button>
               </div>
           </div>
           <div class="total-cont">
@@ -35,16 +35,29 @@ export default {
     },
     computed: {
         ...mapGetters(['getCartData'], ['getTotalPrice']),
+        // ...mapActions(['removeCart']),
         totalPrice() {
           return this.getCartData.reduce((acc, item) => acc + item.price, 0).toFixed(2);
         }
     },
     methods: {
-        ...mapActions(['fetchCart'], ['removeCart']),
-        removeItem(item) {
-            this.removeCart(item)
-        }
+        ...mapActions(['fetchCart']),
+        openBottom(){
+      this.$toast('Item deleted from the cart');
+    },
+        removeItem(itemId) {
+      fetch(`http://localhost:3000/cart/${itemId}`, {
+        method: 'DELETE'
+      })
+        .then(response => {
+          if (response.ok) {
+            this.getCartData = this.getCartData.filter(item => item.id !== itemId);
+          } else {
+            throw new Error('Item deletion failed.');
+          }
+        })
     }
+  }
 }
 </script>
 
