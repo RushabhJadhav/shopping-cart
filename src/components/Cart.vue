@@ -35,7 +35,6 @@ export default {
     },
     computed: {
         ...mapGetters(['getCartData'], ['getTotalPrice']),
-        // ...mapActions(['removeCart']),
         totalPrice() {
           return this.getCartData.reduce((acc, item) => acc + item.price, 0).toFixed(2);
         }
@@ -45,7 +44,7 @@ export default {
         openBottom(){
       this.$toast('Item deleted from the cart');
     },
-        removeItem(itemId) {
+    removeItem(itemId) {
       fetch(`http://localhost:3000/cart/${itemId}`, {
         method: 'DELETE'
       })

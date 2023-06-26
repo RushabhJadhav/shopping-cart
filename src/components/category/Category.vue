@@ -1,24 +1,25 @@
 <template>
-  <div>
-    <header-cont></header-cont>
-    <div class="product-cont">
-      <div class="product-item" v-for="product in getData" :key="product.id">
-        <h2 class="title">{{ product.title.slice(0, 50) }}</h2>
-        <img class="product-img" :src="product.image">
-        <div class="desc">{{ product.description.slice(0, 130) + "..." }}</div>
-        <div class="price">${{ product.price }}</div>
-        <button @click="openBottom(), addItemToCart(product)">Add to Cart</button>
-      </div>
+    <div>
+        <header-cont></header-cont>
+        <div class="product-cont">
+          <div class="product-item" v-for="product in categoryProducts" :key="product.id">
+            <h2 class="title">{{ product.title.slice(0, 50) }}</h2>
+            <img class="product-img" :src="product.image">
+            <div class="desc">{{ product.description.slice(0, 150) + "..." }}</div>
+            <div class="price">${{ product.price }}</div>
+            <button @click="openBottom(), addItemToCart(product)">Add to Cart</button>
+          </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-import Header from './Header.vue'
-import { mapActions,  mapGetters } from 'vuex';
+import Header from '../Header'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  components: {
+    props: ['name', 'categoryProducts'],
+    components: {
     'header-cont': Header
   },
   computed: {
@@ -39,7 +40,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .product-cont {
   display: flex;
   flex-wrap: wrap;
@@ -49,6 +50,7 @@ export default {
   gap: 50px;
   margin: 50px 0;
 }
+
 .product-item {
   border: 1px solid rgba(84, 83, 82, .3);
   width: 300px;
@@ -63,24 +65,30 @@ export default {
   padding: 40px 20px;
   transition: box-shadow .5s ease-in-out;
 }
+
 .product-item:hover {
   box-shadow: 6px 6px 20px #aaaaaa;
 }
+
 .title {
   font-size: 1rem;
 }
+
 .desc {
   text-align: justify;
   font-size: .8rem;
 }
+
 .product-img {
   width: 80%;
   height: 150px;
   object-fit: contain;
 }
+
 .price {
   font-weight: bold;
 }
+
 button {
   padding: 15px 30px;
   border: none;
@@ -90,6 +98,7 @@ button {
   user-select: none;
   cursor: pointer;
 }
+
 button:hover {
   background-color: rgba(19, 133, 240, .7);
 }

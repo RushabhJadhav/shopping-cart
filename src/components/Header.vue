@@ -5,10 +5,10 @@
                 <router-link tag="a" to="/">Shopping Cart</router-link>
             </div>
             <ul>
-                <li><router-link to="/men">Men</router-link></li>
-                <li><router-link to="/women">Women</router-link></li>
-                <li><router-link to="/electronics">Electronics</router-link></li>
-                <li><router-link to="/jewellery">Jewellery</router-link></li>
+                <li><router-link to="/category/men">Men</router-link></li>
+                <li><router-link to="/category/women">Women</router-link></li>
+                <li><router-link to="/category/electronics">Electronics</router-link></li>
+                <li><router-link to="/category/jewellery">Jewellery</router-link></li>
             </ul>
             <input type="text" placeholder="Search...">
             <router-link to="/cart">

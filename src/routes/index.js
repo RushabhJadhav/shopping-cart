@@ -2,20 +2,44 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ProductList from '../components/ProductList'
 import Cart from '../components/Cart'
-import Men from '../components/category/Men'
-import Women from '../components/category/Women'
-import Electronics from '../components/category/Electronics'
-import Jewellery from '../components/category/Jewellery'
+import Category from '../components/category/Category'
+import store from '../store'
 
 Vue.use(VueRouter)
 
 const Routes = [
     {path: '/', component: ProductList },
     {path: '/cart', component: Cart },
-    {path: '/men', component: Men },
-    {path: '/women', component: Women },
-    {path: '/electronics', component: Electronics},
-    {path: '/jewellery', component: Jewellery}
+    {
+        path: '/category/:name',
+        component: Category,
+        props: (route) => {
+            const category = route.params.name.toLowerCase();
+            let categoryData = [];
+      
+            switch (category) {
+              case 'men':
+                categoryData = store.getters.getMenData;
+                break;
+              case 'women':
+                categoryData = store.getters.getWomenData;
+                break;
+              case 'electronics':
+                categoryData = store.getters.getElecData;
+                break;
+              case 'jewellery':
+                categoryData = store.getters.getJewData;
+                break;
+              default:
+                break;
+            }
+      
+            return {
+              name: category,
+              categoryProducts: categoryData,
+            };
+          },
+    }
 ]
 
 export default new VueRouter({
