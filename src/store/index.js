@@ -6,23 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         products: [],
-        cart: []
+        cart: [],
     },
     getters: {
         getData: state => state.products,
         getCartData: state => state.cart,
-        getMenData: state => state.products.filter(function(item) {
-            return item.category == "men's clothing";
-        }),
-        getWomenData: state => state.products.filter(function(item) {
-            return item.category == "women's clothing";
-        }),
-        getElecData: state => state.products.filter(function(item) {
-            return item.category == "electronics";
-        }),
-        getJewData: state => state.products.filter(function(item) {
-            return item.category == "jewelery";
-        })
     },
     mutations: {
         SET_DATA(state, data) {

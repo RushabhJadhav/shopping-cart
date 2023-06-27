@@ -12,15 +12,17 @@
               </div>
           </div>
           <div class="total-cont">
-            <h2>Total : ${{ totalPrice }}</h2>
-            <h2></h2>
+            <h2 v-if="totalPrice > 0">Total : ${{ totalPrice }}</h2>
+            <h2 id="empty-cart" v-if="totalPrice == 0">
+              Your cart is empty <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </h2>
           </div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Header from './Header.vue'
 
 export default {
@@ -37,24 +39,26 @@ export default {
         ...mapGetters(['getCartData'], ['getTotalPrice']),
         totalPrice() {
           return this.getCartData.reduce((acc, item) => acc + item.price, 0).toFixed(2);
-        }
-    },
-    methods: {
+        },
+      },
+      methods: {
         ...mapActions(['fetchCart']),
+        ...mapMutations(['GET_CART']),
         openBottom(){
-      this.$toast('Item deleted from the cart');
+          this.$toast('Item deleted from the cart');
     },
     removeItem(itemId) {
       fetch(`http://localhost:3000/cart/${itemId}`, {
         method: 'DELETE'
       })
-        .then(response => {
-          if (response.ok) {
-            this.getCartData = this.getCartData.filter(item => item.id !== itemId);
-          } else {
-            throw new Error('Item deletion failed.');
-          }
-        })
+      .then(response => {
+        if (response.ok) {
+          const updatedCart = this.getCartData.filter(item => item.id !== itemId);
+          this.GET_CART(updatedCart);
+        } else {
+          throw new Error('Item deletion failed.');
+        }
+      })
     }
   }
 }
@@ -62,7 +66,6 @@ export default {
 
 <style scoped>
 .cart-cont {
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -82,7 +85,6 @@ export default {
   border: 1px solid grey;
   border-bottom: none;
   width: 100%;
-  /* height: 450px; */
   gap: 20px;
   display: inherit;
   flex-direction: column;
@@ -128,5 +130,8 @@ button:hover {
 .total-cont h2 {
   text-align: left;
   margin: 20px;
+}
+#empty-cart {
+  text-align: center;
 }
 </style>

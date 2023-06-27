@@ -2,7 +2,7 @@
     <div>
         <header-cont></header-cont>
         <div class="product-cont">
-          <div class="product-item" v-for="product in categoryProducts" :key="product.id">
+          <div class="product-item" v-for="product in filterCategory" :key="product.id">
             <h2 class="title">{{ product.title.slice(0, 50) }}</h2>
             <img class="product-img" :src="product.image">
             <div class="desc">{{ product.description.slice(0, 150) + "..." }}</div>
@@ -15,15 +15,18 @@
 
 <script>
 import Header from '../Header'
-import { mapActions, mapGetters } from 'vuex';
-
+import { mapActions, mapGetters, mapState } from 'vuex';
 export default {
-    props: ['name', 'categoryProducts'],
+    props: ['name'],
     components: {
     'header-cont': Header
   },
   computed: {
-    ...mapGetters(['getData'])
+    ...mapGetters(['getData']),
+    ...mapState(['products']),
+    filterCategory() {
+      return this.products.filter(item => item.category.includes(this.name));
+    }
   },
   mounted() {
     this.fetchData();
