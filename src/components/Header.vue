@@ -6,7 +6,7 @@
             </div>
             <ul>
                 <li><router-link to="/category/men">Men</router-link></li>
-                <li><router-link to="/category/women">Women</router-link></li>
+                <li><router-link to="/category/woman">Women</router-link></li>
                 <li><router-link to="/category/electronics">Electronics</router-link></li>
                 <li><router-link to="/category/jewellery">Jewellery</router-link></li>
             </ul>
@@ -14,7 +14,7 @@
             <router-link to="/cart">
                 <div class="cart">
                     <i class="fa fa-shopping-bag"></i>
-                    <span id="cart-count">{{ CartCount }}</span>
+                    <span v-if="CartCount > 0" id="cart-count">{{ CartCount }}</span>
                 </div>
             </router-link>
         </nav>
